@@ -1,14 +1,18 @@
+[Home](../../README.md) › [DevOps Projects](README.md) › **Resolve Postgres Pool Exhaustion**
+
 # Resolve Postgres Pool Exhaustion Under Load
 
-**Role:** DevOps Engineer · **Level:** Mid · **Type:** Debug · **Skills:** PostgreSQL, connection pooling, SQLAlchemy, fault tolerance
+`DevOps` · `🟡 Mid` · `🔍 Debug` · `Ticket DO-223`
+
+**Skills** — PostgreSQL · connection pooling · SQLAlchemy · fault tolerance
 
 > One user hits `/reports` and it's fine. Twenty users hit it at once and every single request hangs forever. The pool is too small *and* it's leaking the few connections it has.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> The `/reports` endpoint works for a single user but collapses under modest concurrency - 20 simultaneous requests and everything hangs. Two problems stack: the connection pool is sized at only 5, and the endpoint leaks connections by opening a raw `psycopg2` connection outside the pool and closing it in a path that doesn't run when a query raises.
 
-The `/reports` endpoint works for a single user but collapses under modest concurrency - 20 simultaneous requests and everything hangs. Two problems stack: the connection pool is sized at only 5, and the endpoint leaks connections by opening a raw `psycopg2` connection outside the pool and closing it in a path that doesn't run when a query raises.
-
-## The code
+## 🧩 The code
 
 The undersized pool and the leak (`app.py`):
 
@@ -39,30 +43,38 @@ $ seq 1 20 | xargs -P 20 -I {} curl -s --max-time 10 http://localhost:8000/repor
 # every request hangs; Postgres connection count climbs to the cap and stays there
 ```
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **Reproduce it under load.** A single request is fine; the parallel `xargs` burst makes it hang - the signal that this is a pool/concurrency problem.
 2. **Find the leak.** The endpoint opens its own connection and only closes it on the happy path. Any error leaves the connection orphaned and never returned.
 3. **Fix both issues.** Use the pooled engine instead of a raw connection, ensure the connection is always released (context manager / `try`/`finally`), and size the pool for real concurrency.
 4. **Verify under the same burst.** Re-run the 20-way load - requests complete and connections return to the pool.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - Reproducing a concurrency bug deterministically instead of "it's slow sometimes"
 - Why a connection closed outside `try`/`finally` leaks on any error
 - Using the pool correctly rather than opening raw connections that bypass it
 - Sizing a pool against real load and the role of a pooler like PgBouncer
 
-## What it proves
+## 🏆 What it proves
 
 You can resolve connection-pool exhaustion - find the leak, fix the lifecycle, and size for load - which is a classic production page and a strong mid-level signal.
 
-> Resume-ready: *Diagnosed and fixed PostgreSQL pool exhaustion under load by closing a connection leak and right-sizing the pool, restoring the endpoint under concurrency.*
+> [!TIP]
+> **Resume-ready** — *Diagnosed and fixed PostgreSQL pool exhaustion under load by closing a connection leak and right-sizing the pool, restoring the endpoint under concurrency.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [DevOps Engineer Roadmap](../../roadmaps/devops.md) - **Stage 4: Databases in Production** → Postgres operations.
 
 ---
 
-**Build it for real.** This is ticket **DO-223** on HeyDevJob - the real leaking endpoint above, waiting in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup. [Resolve Postgres Pool Exhaustion on HeyDevJob →](https://heydevjob.com/devops)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **DO-223** on HeyDevJob - the real leaking endpoint above, waiting in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup.
+> [Resolve Postgres Pool Exhaustion on HeyDevJob →](https://heydevjob.com/devops)
+
+**Explore DevOps** · [📍 Roadmap](../../roadmaps/devops.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/devops.md) · [✅ Checklist](../../checklists/devops.md)
+
+[◀ Prev: Stop a Worker From Filling the Disk](stop-a-worker-filling-the-disk.md) · [Next: Reconcile Terraform State Drift ▶](reconcile-terraform-state-drift.md)

@@ -1,12 +1,14 @@
+[Home](../README.md) › **Security Checklist**
+
 # Security Engineer Job-Readiness Checklist
+
+`Checklist` · `9 stages` · `Tick what you can prove`
 
 This is the concrete skill list that gets you hired as a security engineer: think like an attacker, defend like an engineer, and prove you can find, exploit, patch, and harden real systems. It tracks the [Security Engineer Roadmap](../roadmaps/security.md) stage by stage, junior to senior.
 
 Tick what you can already do unaided - no tutorial open, no copy-paste. Where you stall, that's your next ticket on [HeyDevJob](https://heydevjob.com/security), where you fix the real broken system instead of reading about it.
 
----
-
-## Stage 1 - Web Security Fundamentals (OWASP Top 10)
+## 🌐 Stage 1 - Web Security Fundamentals (OWASP Top 10)
 
 - [ ] Name the current OWASP Top 10 and explain each risk in one sentence
 - [ ] Reason about a vulnerability as a *class*, not a one-off bug
@@ -15,7 +17,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Write a Content-Security-Policy that meaningfully reduces XSS impact
 - [ ] Spot unsafe sinks in front-end code (`innerHTML`, `document.write`, `eval`)
 
-## Stage 2 - Injection
+## 💉 Stage 2 - Injection
 
 - [ ] Confirm a SQL injection safely with a non-destructive payload
 - [ ] Exploit SQLi to bypass auth or dump a table (in an authorized target)
@@ -26,7 +28,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Block SSRF by validating the resolved IP and blocking link-local/private ranges
 - [ ] Account for DNS rebinding when validating outbound request destinations
 
-## Stage 3 - Broken Access Control
+## 🚪 Stage 3 - Broken Access Control
 
 - [ ] Identify an IDOR and articulate why authentication doesn't fix it
 - [ ] Add a server-side ownership check that scopes a query to the current user
@@ -35,7 +37,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Audit an endpoint set for missing authorization decisions
 - [ ] Explain why Broken Access Control evades signature-based scanners
 
-## Stage 4 - Authentication & Session Security
+## 🔑 Stage 4 - Authentication & Session Security
 
 - [ ] Forge a token via the JWT `alg: none` bypass and patch it with an algorithm allowlist
 - [ ] Explain JWT algorithm confusion (RS256 to HS256) and its fix
@@ -45,7 +47,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Choose between localStorage and httpOnly cookies for a JWT, with tradeoffs
 - [ ] Design a login flow resistant to brute-force and credential stuffing
 
-## Stage 5 - Secrets & Credentials
+## 🗝️ Stage 5 - Secrets & Credentials
 
 - [ ] Find a committed secret with a scanner (gitleaks / trufflehog)
 - [ ] Purge a secret from full git history with `git filter-repo` or BFG
@@ -54,7 +56,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Move a credential to a secrets manager fetched at runtime with a short-lived token
 - [ ] Set up automatic rotation and audit logging for a managed secret
 
-## Stage 6 - Dependency & Supply Chain Security
+## 📦 Stage 6 - Dependency & Supply Chain Security
 
 - [ ] Run an SCA scan and read the CVE output critically
 - [ ] Triage a CVE by reachability before patching
@@ -62,7 +64,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Generate an SBOM and explain its incident-response value
 - [ ] Pin and verify dependency integrity (lockfiles, hashes)
 
-## Stage 7 - Security Testing & Automation
+## 🤖 Stage 7 - Security Testing & Automation
 
 - [ ] Explain SAST vs DAST vs SCA and what each catches
 - [ ] Build a CI gate that runs static analysis + dependency CVE scan + SBOM
@@ -70,7 +72,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Triage and suppress false positives with a tracked, explicit reason
 - [ ] Keep the security baseline trustworthy so developers don't learn to ignore it
 
-## Stage 8 - Hardening & Secure Configuration
+## 🛡️ Stage 8 - Hardening & Secure Configuration
 
 - [ ] Add rate limiting and request-size caps to a public, unauthenticated API
 - [ ] Enumerate the real permissions a workload uses and scope an IAM role to least privilege
@@ -79,7 +81,7 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Combine httpOnly cookies and CSRF defense to close XSS and CSRF together
 - [ ] Run the service as a low-privilege user to shrink blast radius
 
-## Stage 9 - Senior: Secure Design & Detection
+## 🎯 Stage 9 - Senior: Secure Design & Detection
 
 - [ ] Threat-model a new feature with STRIDE and trust boundaries
 - [ ] Prioritize threats by likelihood and impact, then mitigate/accept/transfer/eliminate
@@ -88,12 +90,12 @@ Tick what you can already do unaided - no tutorial open, no copy-paste. Where yo
 - [ ] Run a blameless post-incident review that closes the vulnerability class
 - [ ] Design layered defenses where no single control is load-bearing
 
+> [!IMPORTANT]
+> **Can't tick it? Prove it.**
+> Every unchecked box is a ticket. On HeyDevJob you don't read about a vulnerability - you exploit the real one, patch it, and harden the system, then it lands on a portfolio hiring managers can open and click. The junior tier is free. No card, no setup.
+>
+> **Start your portfolio →** [heydevjob.com/security](https://heydevjob.com/security)
+
 ---
 
-## Can't tick it? Prove it.
-
-Every unchecked box is a ticket. On HeyDevJob you don't read about a vulnerability - you exploit the real one, patch it, and harden the system, then it lands on a portfolio hiring managers can open and click.
-
-The junior tier is free. No card, no setup.
-
-**Start your portfolio →** [heydevjob.com/security](https://heydevjob.com/security)
+**Explore Security** · [📍 Roadmap](../roadmaps/security.md) · [🛠️ Projects](../projects/security/README.md) · [💬 Interview](../interview/security.md) · [✅ Checklist](security.md)

@@ -1,14 +1,18 @@
+[Home](../../README.md) › [AI/ML Projects](README.md) › **Cut LLM Costs With Redis Caching**
+
 # Cut LLM Costs by Caching With Redis
 
-**Role:** AI/ML Engineer · **Level:** Mid · **Type:** Optimize · **Skills:** caching, Redis, cost optimization, LLM
+`AI/ML` · `🟡 Mid` · `⚡ Optimize` · `Ticket AI-203`
+
+**Skills** — caching · Redis · cost optimization · LLM
 
 > The OpenAI bill is climbing because the same hot prompts get sent dozens of times an hour. Every identical question pays full price. A cache-aside layer takes the per-prompt cost from N down to 1 - in about five lines.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> An LLM-backed `/ask` endpoint calls the model on every request, even when the prompt is identical, driving up the bill. You wrap the call in a Redis cache-aside layer: check the cache first, on a miss call the LLM and store the response with a 24h TTL, so repeat questions skip the model entirely.
 
-An LLM-backed `/ask` endpoint calls the model on every request, even when the prompt is identical, driving up the bill. You wrap the call in a Redis cache-aside layer: check the cache first, on a miss call the LLM and store the response with a 24h TTL, so repeat questions skip the model entirely.
-
-## The code
+## 🧩 The code
 
 The uncached call (`app.py`):
 
@@ -35,30 +39,38 @@ The symptom:
 same prompt asked 50x/hour -> 50 LLM calls, 50x the cost
 ```
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **Check first.** Before calling the LLM, look up `llm:{q}` in Redis - on a hit, return the cached answer and skip the model.
 2. **Populate on miss.** On a miss, call the LLM, then store the response under that key.
 3. **Set a TTL.** A 24h expiry keeps answers fresh-ish and bounds memory.
 4. **Verify.** The LLM hit-counter stops climbing for repeated prompts; identical questions are served from cache.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - The cache-aside pattern applied to LLM calls
 - Keying a cache on the prompt and choosing a TTL
 - Why even a modest hit rate meaningfully cuts the bill
 - That LLM cost scales linearly with request volume
 
-## What it proves
+## 🏆 What it proves
 
 You can cut LLM cost with a simple, correct caching layer - the cheapest, highest-leverage optimization in any LLM product.
 
-> Resume-ready: *Added a Redis cache-aside layer to LLM calls keyed on the prompt, eliminating duplicate inference and cutting API cost on repeat questions.*
+> [!TIP]
+> **Resume-ready** — *Added a Redis cache-aside layer to LLM calls keyed on the prompt, eliminating duplicate inference and cutting API cost on repeat questions.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [AI/ML Engineer Roadmap](../../roadmaps/ai.md) - **Stage 8: Cost & Performance** → Response caching.
 
 ---
 
-**Build it for real.** This is ticket **AI-203** on HeyDevJob - the real uncached endpoint above, in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup. [Cut LLM Costs With Redis Caching on HeyDevJob →](https://heydevjob.com/ai)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **AI-203** on HeyDevJob - the real uncached endpoint above, in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup.
+> [Cut LLM Costs With Redis Caching on HeyDevJob →](https://heydevjob.com/ai)
+
+**Explore AI/ML** · [📍 Roadmap](../../roadmaps/ai.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/ai.md) · [✅ Checklist](../../checklists/ai.md)
+
+[◀ Prev: Make an LLM Pick the Right Tool (Function Calling)](make-an-llm-call-tools.md) · [Next: Build an End-to-End RAG Pipeline ▶](build-an-end-to-end-rag-pipeline.md)

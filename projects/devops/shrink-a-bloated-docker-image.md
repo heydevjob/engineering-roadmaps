@@ -1,14 +1,18 @@
+[Home](../../README.md) › [DevOps Projects](README.md) › **Shrink a Bloated Docker Image**
+
 # Shrink a Bloated Docker Image (Multi-Stage Build)
 
-**Role:** DevOps Engineer · **Level:** Junior · **Type:** Optimize · **Skills:** Docker, multi-stage builds, image hygiene
+`DevOps` · `🟢 Junior` · `⚡ Optimize` · `Ticket DO-114`
+
+**Skills** — Docker · multi-stage builds · image hygiene
 
 > The image is ~370MB and every deploy drags it across the network. Half of it is a build-time artifact that has no business being in the thing you ship.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> The team's Docker image is bloated at ~370MB and deploys are slow. The single-stage Dockerfile produces a 200MB build-time artifact (think a data extract or preprocessing step) that's only needed *during* the build - but because it's all one stage, that 200MB ends up baked into the final runtime image.
 
-The team's Docker image is bloated at ~370MB and deploys are slow. The single-stage Dockerfile produces a 200MB build-time artifact (think a data extract or preprocessing step) that's only needed *during* the build - but because it's all one stage, that 200MB ends up baked into the final runtime image.
-
-## The code
+## 🧩 The code
 
 The single-stage Dockerfile as it stands:
 
@@ -35,30 +39,38 @@ REPOSITORY   TAG      SIZE
 do114-app    latest   ~370MB     # ~200MB of it is build-artifact.bin
 ```
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **See why deleting it later won't help.** A `RUN rm` in a later layer doesn't shrink the image - the 200MB still lives in the earlier layer. Image size is the sum of layers, not the final filesystem.
 2. **Split into two stages.** Do the build-time work in a `builder` stage, then `COPY --from=builder` only the artifacts the runtime actually needs into a clean final stage.
 3. **Leave the 200MB behind.** The build artifact stays in the builder stage and never reaches the shipped image.
 4. **Verify.** Rebuild and check `docker images` - the final image drops to ~150MB.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - Why image layers mean "delete it later" doesn't reduce size
 - The multi-stage pattern: heavy work in the builder, only artifacts in the runtime
 - Choosing a slim runtime base and the size/debuggability trade-off
 - Confirming the win by measuring the final image, not the build log
 
-## What it proves
+## 🏆 What it proves
 
 You can cut a bloated production image roughly in half without changing what the app does - speeding every deploy and shrinking the attack surface.
 
-> Resume-ready: *Refactored a single-stage Dockerfile into a multi-stage build, dropping the production image from ~370MB to ~150MB and cutting deploy time.*
+> [!TIP]
+> **Resume-ready** — *Refactored a single-stage Dockerfile into a multi-stage build, dropping the production image from ~370MB to ~150MB and cutting deploy time.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [DevOps Engineer Roadmap](../../roadmaps/devops.md) - **Stage 5: Containers** → Docker fundamentals.
 
 ---
 
-**Build it for real.** This is ticket **DO-114** on HeyDevJob - the real bloated image above, waiting in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup. [Shrink a Bloated Docker Image on HeyDevJob →](https://heydevjob.com/devops)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **DO-114** on HeyDevJob - the real bloated image above, waiting in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup.
+> [Shrink a Bloated Docker Image on HeyDevJob →](https://heydevjob.com/devops)
+
+**Explore DevOps** · [📍 Roadmap](../../roadmaps/devops.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/devops.md) · [✅ Checklist](../../checklists/devops.md)
+
+[◀ Prev: Bind a Node App to 0.0.0.0](bind-a-node-app-to-all-interfaces.md) · [Next: Stop a Worker From Filling the Disk ▶](stop-a-worker-filling-the-disk.md)

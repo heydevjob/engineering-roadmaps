@@ -1,14 +1,18 @@
+[Home](../../README.md) › [Data Projects](README.md) › **Build a Kimball Star Schema**
+
 # Build a Kimball Star Schema
 
-**Role:** Data Engineer · **Level:** Senior · **Type:** Design · **Skills:** dimensional modeling, Kimball, star schema, dbt
+`Data` · `🔴 Senior` · `📐 Design` · `Ticket DE-302`
+
+**Skills** — dimensional modeling · Kimball · star schema · dbt
 
 > Every dashboard joins six raw tables, so every dashboard is slow. You're modeling the orders mart as a star schema - one fact table, conformed dimensions, surrogate keys - so reporting joins become deterministic and fast.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> Reporting is slow because dashboards join six raw tables. You build a Kimball star schema in dbt: `dim_customers`, `dim_products`, `dim_date`, and `fct_orders` at order-line grain - surrogate keys, foreign keys to each dimension, and tested relationships. All surrogate keys get unique+not_null tests; all FKs get relationships tests.
 
-Reporting is slow because dashboards join six raw tables. You build a Kimball star schema in dbt: `dim_customers`, `dim_products`, `dim_date`, and `fct_orders` at order-line grain - surrogate keys, foreign keys to each dimension, and tested relationships. All surrogate keys get unique+not_null tests; all FKs get relationships tests.
-
-## The code
+## 🧩 The code
 
 The fact-table pattern you build toward (`fct_orders.sql`):
 
@@ -28,30 +32,38 @@ JOIN {{ source('raw', 'products') }} p ON p.id = ol.product_id
 
 (Build-from-scratch: you author the fact table and three dimensions.)
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **Pick the grain.** Decide the fact grain (one row per order line) - everything else follows from it.
 2. **Build dimensions.** `dim_customers`, `dim_products`, and a generated `dim_date` (one row per day across the year), each with a surrogate key.
 3. **Build the fact.** `fct_orders` carries the measures (quantity, gross/discount/net amount) and FKs (surrogate keys) to each dimension.
 4. **Test it.** Unique+not_null on every surrogate key, relationships tests on every FK, then `dbt build` runs the lineage and tests green.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - Dimensional modeling: fact tables, dimensions, and grain
 - Surrogate keys and why they decouple the warehouse from source ids
 - Conformed dimensions and a generated date dimension
 - Enforcing integrity with unique/not_null/relationships tests
 
-## What it proves
+## 🏆 What it proves
 
 You can design the textbook reporting layout - a Kimball star schema with tested integrity - that makes dashboards fast and joins deterministic.
 
-> Resume-ready: *Designed a Kimball star schema in dbt - fact table at order-line grain, conformed dimensions, surrogate keys, and tested relationships - to accelerate reporting.*
+> [!TIP]
+> **Resume-ready** — *Designed a Kimball star schema in dbt - fact table at order-line grain, conformed dimensions, surrogate keys, and tested relationships - to accelerate reporting.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [Data Engineer Roadmap](../../roadmaps/data.md) - **Stage 8: Senior - Modeling & Streaming** → Dimensional modeling.
 
 ---
 
-**Build it for real.** This is ticket **DE-302** on HeyDevJob - the real modeling task above, in a cloud workspace you build from your browser. Each model you ship lands on a portfolio you can show. [Build a Kimball Star Schema on HeyDevJob →](https://heydevjob.com/data)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **DE-302** on HeyDevJob - the real modeling task above, in a cloud workspace you build from your browser. Each model you ship lands on a portfolio you can show.
+> [Build a Kimball Star Schema on HeyDevJob →](https://heydevjob.com/data)
+
+**Explore Data** · [📍 Roadmap](../../roadmaps/data.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/data.md) · [✅ Checklist](../../checklists/data.md)
+
+[◀ Prev: Migrate a pandas Pipeline to Polars](migrate-pandas-to-polars.md) · [Next: Backfill a Column Safely ▶](backfill-a-column-safely.md)

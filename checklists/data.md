@@ -1,12 +1,12 @@
+[Home](../README.md) › **Data Checklist**
+
 # Data Engineer Job-Readiness Checklist
 
-This is the concrete skill list that gets you hired as a data engineer - not topics to "have heard of," but things you can do in a workspace under pressure. It follows the [Data Engineer Roadmap](../roadmaps/data.md) from junior SQL to senior warehouse design.
+`Checklist` · `8 stages` · `Tick what you can prove`
 
-Tick an item only if you could do it right now on a real broken system, not just describe it. Anything you can't tick is a ticket to go ship on [HeyDevJob](https://heydevjob.com/data).
+The concrete skill list that gets you hired as a data engineer - not topics to "have heard of," but things you can do in a workspace under pressure. It follows the [Data Engineer Roadmap](../roadmaps/data.md) from junior SQL to senior warehouse design. Tick an item only if you could do it right now on a real broken system, not just describe it. Anything you can't tick is a ticket to go ship on [HeyDevJob](https://heydevjob.com/data).
 
----
-
-## Stage 1 - SQL Foundations
+## 🧮 Stage 1 - SQL Foundations
 
 - [ ] Write correct multi-table joins and reason about which join type keeps or drops rows
 - [ ] Identify the grain of a table and confirm a query hasn't changed it
@@ -19,7 +19,7 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Find and remove duplicate rows using a window function over the natural key
 - [ ] Choose `UNION` vs `UNION ALL` deliberately for correctness and speed
 
-## Stage 2 - ETL Reliability
+## 🔁 Stage 2 - ETL Reliability
 
 - [ ] Make a load idempotent with `INSERT ... ON CONFLICT` (UPSERT) on a natural key
 - [ ] Explain why a non-idempotent append doubles rows on retry
@@ -29,14 +29,14 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Make a pipeline safe to re-run from the start after a mid-run failure
 - [ ] Add retries with backoff around steps that touch flaky sources
 
-## Stage 3 - Incremental Loading
+## 📈 Stage 3 - Incremental Loading
 
 - [ ] Track a watermark and load only `WHERE updated_at > watermark`
 - [ ] Explain why incremental loading beats truncate-and-reload (no query blackout)
 - [ ] Handle late-arriving and out-of-order data against a timestamp watermark
 - [ ] Pick `>` vs `>=` at the watermark boundary and pair it with an idempotent write
 
-## Stage 4 - File Formats & the Lakehouse
+## 🗂️ Stage 4 - File Formats & the Lakehouse
 
 - [ ] Convert CSV to Parquet with compression
 - [ ] Explain how columnar storage skips unread columns
@@ -44,7 +44,7 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Write a query that triggers partition pruning
 - [ ] Avoid the small-files problem from over-fine partitioning
 
-## Stage 5 - Performance
+## ⚡ Stage 5 - Performance
 
 - [ ] Replace row-by-row inserts with a bulk path (`COPY` / batched commits)
 - [ ] Explain why single-row insert-and-commit is the worst-case load pattern
@@ -53,7 +53,7 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Add the right index for a new filter column and refresh stale statistics
 - [ ] Diagnose a slow query to its actual cause instead of guessing
 
-## Stage 6 - Orchestration
+## 🛠️ Stage 6 - Orchestration
 
 - [ ] Wrap an ETL script in an Airflow DAG with task dependencies
 - [ ] Configure schedules, retries, and SLAs on a DAG
@@ -61,7 +61,7 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Run a backfill across a historical date range without double-counting
 - [ ] Explain what Airflow gives you over cron plus a script
 
-## Stage 7 - Analytics Engineering (dbt)
+## 🧱 Stage 7 - Analytics Engineering (dbt)
 
 - [ ] Structure a dbt project with the staging-to-marts pattern
 - [ ] Declare raw tables in `sources.yml` and reference them with `{{ source() }}`
@@ -70,7 +70,7 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Add generic tests (`not_null`, `unique`, `relationships`) and run them in `dbt build`
 - [ ] Write a dbt incremental model with a `unique_key` and `is_incremental()` filter
 
-## Stage 8 - Senior: Modeling & Streaming
+## 🏛️ Stage 8 - Senior: Modeling & Streaming
 
 - [ ] Design a Kimball star schema: one fact table, conformed dimensions
 - [ ] Use surrogate keys and explain why they beat natural keys in dimensions
@@ -81,8 +81,12 @@ Tick an item only if you could do it right now on a real broken system, not just
 - [ ] Commit Kafka offsets only after the downstream write succeeds
 - [ ] Reason about late data, ordering, and replay in a streaming pipeline
 
-## Can't tick it? Prove it.
+> [!IMPORTANT]
+> **Can't tick it? Prove it.**
+> Every unchecked box is a real broken system waiting on [HeyDevJob](https://heydevjob.com/data) - a pipeline, query, or model you fix in a live cloud workspace from your browser. The junior tier is free, no card, no setup. Each ticket you ship lands on a portfolio hiring managers can open and click.
+>
+> **Start your portfolio →** [heydevjob.com/data](https://heydevjob.com/data)
 
-Every unchecked box is a real broken system waiting on [HeyDevJob](https://heydevjob.com/data) - a pipeline, query, or model you fix in a live cloud workspace from your browser. The junior tier is free, no card, no setup. Each ticket you ship lands on a portfolio hiring managers can open and click.
+---
 
-**Start your portfolio →** [heydevjob.com/data](https://heydevjob.com/data)
+**Explore Data** · [📍 Roadmap](../roadmaps/data.md) · [🛠️ Projects](../projects/data/README.md) · [💬 Interview](../interview/data.md) · [✅ Checklist](data.md)

@@ -1,14 +1,18 @@
+[Home](../../README.md) › [AI/ML Projects](README.md) › **Restore Token Streaming on a Chat Endpoint**
+
 # Restore Token Streaming on a Chat Endpoint
 
-**Role:** AI/ML Engineer · **Level:** Junior · **Type:** Debug · **Skills:** LLM, streaming, SSE, Flask
+`AI/ML` · `🟢 Junior` · `🔍 Debug` · `Ticket AI-109`
+
+**Skills** — LLM · streaming · SSE · Flask
 
 > The chat should type out word by word. Instead it pauses, then dumps the whole reply at once. Two bugs: the LLM call isn't asking for a stream, and the endpoint collects every token before sending one. Streaming is what makes LLM UX feel fast.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> The `/chat/stream` endpoint should proxy the LLM as Server-Sent Events so the UI renders tokens live, but the whole response appears at once after a pause. Two bugs: the call collects all chunks into one string before yielding, and it yields once at the end. You make it stream each token as it arrives.
 
-The `/chat/stream` endpoint should proxy the LLM as Server-Sent Events so the UI renders tokens live, but the whole response appears at once after a pause. Two bugs: the call collects all chunks into one string before yielding, and it yields once at the end. You make it stream each token as it arrives.
-
-## The code
+## 🧩 The code
 
 The generator that buffers everything (`app.py`):
 
@@ -34,30 +38,38 @@ The symptom:
 ask a question -> long pause -> entire reply appears at once (no streaming)
 ```
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **Find the buffering link.** The loop accumulates into `full_response` and yields once - nothing reaches the client until the LLM is fully done.
 2. **Yield per token.** Move the `yield` inside the loop: emit each token's content as an SSE event the instant it arrives.
 3. **Keep the SSE format.** Send each chunk as `data: {...}\n\n` and finish with `[DONE]`.
 4. **Verify.** The reply now types out live instead of arriving all at once.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - Why perceived latency tracks first-token time, not total time
 - Streaming end to end: a stream-aware LLM call *and* a generator HTTP response
 - The SSE wire format (`data:` lines, `[DONE]`)
 - Spotting the link that buffers and kills the effect
 
-## What it proves
+## 🏆 What it proves
 
 You can debug a streaming LLM pipeline and find the buffering link - the difference between a chat that feels instant and one that freezes.
 
-> Resume-ready: *Restored token streaming on a chat endpoint by yielding SSE events per token instead of buffering the full LLM response.*
+> [!TIP]
+> **Resume-ready** — *Restored token streaming on a chat endpoint by yielding SSE events per token instead of buffering the full LLM response.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [AI/ML Engineer Roadmap](../../roadmaps/ai.md) - **Stage 5: Stateful & Streaming Chat** → Token streaming.
 
 ---
 
-**Build it for real.** This is ticket **AI-109** on HeyDevJob - the real buffering endpoint above, in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup. [Restore Token Streaming on a Chat Endpoint on HeyDevJob →](https://heydevjob.com/ai)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **AI-109** on HeyDevJob - the real buffering endpoint above, in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup.
+> [Restore Token Streaming on a Chat Endpoint on HeyDevJob →](https://heydevjob.com/ai)
+
+**Explore AI/ML** · [📍 Roadmap](../../roadmaps/ai.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/ai.md) · [✅ Checklist](../../checklists/ai.md)
+
+[◀ Prev: Add Conversation Memory to a Chatbot](add-conversation-memory.md) · [Next: Fix the Chunking That's Wrecking RAG Retrieval ▶](fix-the-rag-chunking.md)

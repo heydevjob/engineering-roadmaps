@@ -1,14 +1,18 @@
+[Home](../../README.md) › [Backend Projects](README.md) › **Add a Rate Limiter to an API**
+
 # Add a Rate Limiter to an API
 
-**Role:** Backend Engineer · **Level:** Junior · **Type:** Harden · **Skills:** rate limiting, Redis, API design
+`Backend` · `🟢 Junior` · `🛡️ Harden` · `Ticket BE-113`
+
+**Skills** — rate limiting · Redis · API design
 
 > One client just burst 1,000 requests a second at the search endpoint. There's no limit, so they can exhaust the database, the downstream calls, and the budget for everyone. You're capping it.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> `/api/search` is open with no throttling, and a client was observed bursting 1,000 req/s. You add per-client rate limiting - 5 requests per 60-second window - returning `429 Too Many Requests` with a `Retry-After` header when a caller exceeds it. The client is identified by an `X-Client-Id` header, falling back to the request IP.
 
-`/api/search` is open with no throttling, and a client was observed bursting 1,000 req/s. You add per-client rate limiting - 5 requests per 60-second window - returning `429 Too Many Requests` with a `Retry-After` header when a caller exceeds it. The client is identified by an `X-Client-Id` header, falling back to the request IP.
-
-## The code
+## 🧩 The code
 
 The unlimited endpoint with the requirements (`main.py`):
 
@@ -37,30 +41,38 @@ $ for i in $(seq 1 1000); do curl -s /api/search?q=x & done
 # all 1000 succeed - no throttling, no 429
 ```
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **Identify the client.** Prefer `X-Client-Id`, fall back to the IP - that's the key you count against.
 2. **Count in a window.** Track requests per client per 60s (a Redis counter / token bucket works across instances, unlike an in-process dict).
 3. **Reject over the limit.** Past 5 in the window, return `429` with `Retry-After` telling the client when to come back.
 4. **Verify.** The 6th request in a minute gets `429`; after the window resets, requests succeed again.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - Rate-limiting algorithms: fixed window, sliding window, token bucket
 - Counting per-client in a shared store (Redis) so it works across instances
 - The correct response: `429`, `Retry-After`, and rate-limit headers
 - Choosing a limit that stops abuse without blocking legitimate bursts
 
-## What it proves
+## 🏆 What it proves
 
 You can protect a service from being overwhelmed by a single client - basic survival for any public API, and a system-design interview staple.
 
-> Resume-ready: *Added per-client rate limiting (5 req/60s) with 429 + Retry-After responses, protecting an endpoint from request-flood abuse.*
+> [!TIP]
+> **Resume-ready** — *Added per-client rate limiting (5 req/60s) with 429 + Retry-After responses, protecting an endpoint from request-flood abuse.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [Backend Engineer Roadmap](../../roadmaps/backend.md) - **Stage 5: Caching & Performance** → Rate limiting.
 
 ---
 
-**Build it for real.** This is ticket **BE-113** on HeyDevJob - the real unthrottled endpoint above, waiting in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup. [Add a Rate Limiter to an API on HeyDevJob →](https://heydevjob.com/backend)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **BE-113** on HeyDevJob - the real unthrottled endpoint above, waiting in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup.
+> [Add a Rate Limiter to an API on HeyDevJob →](https://heydevjob.com/backend)
+
+**Explore Backend** · [📍 Roadmap](../../roadmaps/backend.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/backend.md) · [✅ Checklist](../../checklists/backend.md)
+
+[◀ Prev: Honor an Idempotency-Key Header on POST](honor-an-idempotency-key.md) · [Next: Fix the N+1 Query ▶](fix-the-n-plus-1-query.md)

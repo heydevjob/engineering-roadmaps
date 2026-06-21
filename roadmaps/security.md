@@ -1,4 +1,8 @@
+[Home](../README.md) › **Security Roadmap**
+
 # Security Engineer Roadmap
+
+`Roadmap` · `9 stages` · `Junior → Senior`
 
 The path from "I can spot a SQL injection" to "I can harden a whole system" - the skills, in order, that get you hired as a security engineer and trusted to find what's broken before an attacker does.
 
@@ -9,11 +13,36 @@ Security is a discipline of **finding, proving, and closing** weaknesses. The hi
 - **Patch** - fix a specific vulnerability
 - **Harden** - lock a system down preventatively
 
-Work top to bottom. You learn to break things before you can defend them.
+> [!NOTE]
+> **How to read a node**
+> - *What* - the skill in one line
+> - *Why it matters* - what an attacker does when you don't have it
+> - *Prove it* - the project that turns the skill into a portfolio piece
+>
+> Work top to bottom. You learn to break things before you can defend them.
+
+```mermaid
+flowchart TD
+    S1["Stage 1 · Web Security Fundamentals"] --> S2["Stage 2 · Injection"]
+    S2 --> S3["Stage 3 · Broken Access Control"]
+    S3 --> S4["Stage 4 · Authentication &amp; Session Security"]
+    S4 --> S5["Stage 5 · Secrets &amp; Credentials"]
+    S5 --> S6["Stage 6 · Dependency &amp; Supply Chain Security"]
+    S6 --> S7["Stage 7 · Security Testing &amp; Automation"]
+    S7 --> S8["Stage 8 · Hardening &amp; Secure Configuration"]
+    S8 --> S9["Stage 9 · Senior: Secure Design &amp; Detection"]
+
+    classDef foundation fill:#dcfce7,stroke:#16a34a,color:#14532d;
+    classDef core fill:#fef9c3,stroke:#ca8a04,color:#713f12;
+    classDef senior fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
+    class S1,S2,S3 foundation;
+    class S4,S5,S6,S7,S8 core;
+    class S9 senior;
+```
 
 ---
 
-## Stage 1 - Web Security Fundamentals (OWASP Top 10)
+## 🌐 Stage 1 - Web Security Fundamentals (OWASP Top 10)
 
 The vulnerability classes that show up in every assessment and every interview.
 
@@ -22,7 +51,7 @@ The vulnerability classes that show up in every assessment and every interview.
 - *Why it matters:* XSS leads to session theft and account takeover. Hand-rolled HTML string concatenation is where most stored XSS lives.
 - *Prove it:* [Neutralize a Stored XSS in Comments](../projects/security/neutralize-a-stored-xss.md) *(Patch)*
 
-## Stage 2 - Injection
+## 💉 Stage 2 - Injection
 
 Untrusted input reaching an interpreter - the root of the most severe vulnerabilities.
 
@@ -41,7 +70,7 @@ Untrusted input reaching an interpreter - the root of the most severe vulnerabil
 - *Why it matters:* SSRF is how attackers pivot into internal networks and steal cloud credentials. A top modern vulnerability.
 - *Prove it:* [Block an SSRF in a URL Fetcher](../projects/security/block-an-ssrf.md) *(Harden)*
 
-## Stage 3 - Broken Access Control
+## 🚪 Stage 3 - Broken Access Control
 
 Reaching data or files you shouldn't - the most common serious web vulnerability today.
 
@@ -55,7 +84,7 @@ Reaching data or files you shouldn't - the most common serious web vulnerability
 - *Why it matters:* An authenticated-but-not-authorized endpoint lets anyone enumerate ids and read everyone's data - trivially exploitable, easily missed.
 - *Prove it:* [Fix an IDOR Exposing Other Users' Invoices](../projects/security/fix-an-idor.md) *(Exploit)*
 
-## Stage 4 - Authentication & Session Security
+## 🔑 Stage 4 - Authentication & Session Security
 
 Who someone is, proven correctly. The flaws here are account takeover.
 
@@ -74,7 +103,7 @@ Who someone is, proven correctly. The flaws here are account takeover.
 - *Why it matters:* A session cookie is a bearer token - whoever holds it *is* that user. Framework defaults leave them theft-friendly.
 - *Prove it:* [Harden Session Cookie Security Flags](../projects/security/harden-session-cookie-flags.md) *(Harden)*
 
-## Stage 5 - Secrets & Credentials
+## 🗝️ Stage 5 - Secrets & Credentials
 
 Keys and tokens, and the places they leak.
 
@@ -88,7 +117,7 @@ Keys and tokens, and the places they leak.
 - *Why it matters:* Plaintext-in-env is the most common credential-leak vector - visible in `docker inspect`, manifests, and CI logs.
 - *Prove it:* [Move a Plaintext Secret to AWS Secrets Manager](../projects/security/move-a-secret-to-aws-secrets-manager.md) *(Harden)*
 
-## Stage 6 - Dependency & Supply Chain Security
+## 📦 Stage 6 - Dependency & Supply Chain Security
 
 Most of your code is someone else's. Their vulnerabilities are yours.
 
@@ -97,7 +126,7 @@ Most of your code is someone else's. Their vulnerabilities are yours.
 - *Why it matters:* Supply-chain CVEs (Log4Shell-class) are some of the most exploited vulnerabilities. Every CVE in your tree is your CVE.
 - *Prove it:* [Patch Vulnerable npm Dependencies](../projects/security/patch-vulnerable-npm-dependencies.md) *(Patch)*
 
-## Stage 7 - Security Testing & Automation
+## 🤖 Stage 7 - Security Testing & Automation
 
 Finding vulnerabilities at scale, not one at a time.
 
@@ -106,7 +135,7 @@ Finding vulnerabilities at scale, not one at a time.
 - *Why it matters:* Catching issues before they ship is ~100x cheaper than after. Automated scanning is how security scales across a codebase.
 - *Prove it:* [Build a Security Scan Pipeline (SAST + SCA)](../projects/security/build-a-security-scan-pipeline.md) *(Audit)*
 
-## Stage 8 - Hardening & Secure Configuration
+## 🛡️ Stage 8 - Hardening & Secure Configuration
 
 Reducing the blast radius before anything goes wrong.
 
@@ -125,7 +154,7 @@ Reducing the blast radius before anything goes wrong.
 - *Why it matters:* A JWT in `localStorage` is XSS-stealable; a state-changing endpoint with no CSRF check is forgeable from any site.
 - *Prove it:* [Move JWT to httpOnly Cookies (XSS + CSRF)](../projects/security/move-jwt-to-httponly-cookies.md) *(Harden)*
 
-## Stage 9 - Senior: Secure Design & Detection
+## 🎯 Stage 9 - Senior: Secure Design & Detection
 
 Where security stops being reactive - designing it in, and catching what slips through.
 
@@ -136,17 +165,21 @@ Where security stops being reactive - designing it in, and catching what slips t
 
 ---
 
-## Where you are on the path
+## 🧭 Where you are on the path
 
 | Stage | You can... | Hiring level |
 |-------|-----------|--------------|
-| 1-2 | Find and fix the core injection vulnerabilities | Junior |
-| 3-5 | Assess access control, auth, and secret handling | Junior → Mid |
-| 6-8 | Scale security with tooling and harden systems | Mid → Senior |
-| 9 | Design security in and own detection | Senior |
+| 1-2 | Find and fix the core injection vulnerabilities | 🟢 Junior |
+| 3-5 | Assess access control, auth, and secret handling | 🟢 Junior → 🟡 Mid |
+| 6-8 | Scale security with tooling and harden systems | 🟡 Mid → 🔴 Senior |
+| 9 | Design security in and own detection | 🔴 Senior |
 
-## Build it for real
+> [!IMPORTANT]
+> **Build it for real**
+> Every project linked above is a live ticket on [HeyDevJob](https://heydevjob.com/security) - a real vulnerable system in a cloud workspace you attack, patch, or harden from your browser. The junior tier is free, no card, no setup. Each one you complete lands on a portfolio you can show.
+>
+> **Start your portfolio →** [heydevjob.com/security](https://heydevjob.com/security)
 
-Every project linked above is a live ticket on [HeyDevJob](https://heydevjob.com/security) - a real vulnerable system in a cloud workspace you attack, patch, or harden from your browser. The junior tier is free, no card, no setup. Each one you complete lands on a portfolio you can show.
+---
 
-**Start your portfolio →** [heydevjob.com/security](https://heydevjob.com/security)
+**Explore Security** · [📍 Roadmap](security.md) · [🛠️ Projects](../projects/security/README.md) · [💬 Interview](../interview/security.md) · [✅ Checklist](../checklists/security.md)

@@ -1,14 +1,18 @@
+[Home](../../README.md) › [Kubernetes Projects](README.md) › **Fix a Kubernetes CrashLoopBackOff**
+
 # Fix a Kubernetes CrashLoopBackOff
 
-**Role:** Kubernetes Engineer · **Level:** Junior · **Type:** Debug · **Skills:** kubectl, pods, deployments, debugging
+`Kubernetes` · `🟢 Junior` · `🔍 Debug` · `Ticket K8-101`
+
+**Skills** — kubectl · pods · deployments · debugging
 
 > The `web` pods keep dying and restarting - `CrashLoopBackOff`. The container fails the instant it starts. The whole case is in `describe` and `logs`, if you build the reflex to look there first.
 
-## The scenario
+> [!NOTE]
+> **The scenario**
+> A Deployment named `web` has pods stuck in `CrashLoopBackOff` because the container command fails immediately on startup. You read the pod's events (`kubectl describe pod`) and logs (`kubectl logs`) to find the real cause, fix the manifest, and re-apply so it starts cleanly.
 
-A Deployment named `web` has pods stuck in `CrashLoopBackOff` because the container command fails immediately on startup. You read the pod's events (`kubectl describe pod`) and logs (`kubectl logs`) to find the real cause, fix the manifest, and re-apply so it starts cleanly.
-
-## The code
+## 🧩 The code
 
 The container command in `deployment.yaml`:
 
@@ -30,30 +34,38 @@ web-xxxx               0/1     CrashLoopBackOff   5
 $ kubectl describe pod -l app=web   # Events: exit code 127 (command not found)
 ```
 
-## How you'll approach it
+## 🛠️ How you'll approach it
 
 1. **Describe first.** `kubectl describe pod -l app=web` - the Events show the container terminating with exit code 127.
 2. **Read the logs.** `kubectl logs` (and `--previous` for the crashed instance) confirm the command isn't found.
 3. **Fix the manifest.** Correct `sleeep` → `sleep` in the `command:` field.
 4. **Re-apply and watch.** `kubectl apply -f deployment.yaml`, then `kubectl get pods -w` until it's `Running`.
 
-## What you'll learn
+## 🎓 What you'll learn
 
 - The `describe → logs → events` reflex for any failing pod
 - Reading container exit codes (127 = command not found)
 - Why `CrashLoopBackOff` is a symptom, not a cause
 - Confirming recovery by watching the pod reach `Running`, not just applying
 
-## What it proves
+## 🏆 What it proves
 
 You can debug the most common Kubernetes failure state from the events and logs - the on-call reflex that defines a competent Kubernetes engineer.
 
-> Resume-ready: *Diagnosed a CrashLoopBackOff to a bad container command via pod events and logs, corrected the Deployment, and restored the workload.*
+> [!TIP]
+> **Resume-ready** — *Diagnosed a CrashLoopBackOff to a bad container command via pod events and logs, corrected the Deployment, and restored the workload.*
 
-## On the roadmap
+## 🗺️ On the roadmap
 
 Part of the [Kubernetes Engineer Roadmap](../../roadmaps/kubernetes.md) - **Stage 1: The Object Model & Debugging Pods** → CrashLoopBackOff.
 
 ---
 
-**Build it for real.** This is ticket **K8-101** on HeyDevJob - the real CrashLooping Deployment above, in a cloud workspace where you run kubectl from your browser. Free on the junior tier, no card, no setup. [Fix a Kubernetes CrashLoopBackOff on HeyDevJob →](https://heydevjob.com/projects/kubernetes-crashloopbackoff-portfolio-project)
+> [!IMPORTANT]
+> **Build it for real**
+> This is ticket **K8-101** on HeyDevJob - the real CrashLooping Deployment above, in a cloud workspace where you run kubectl from your browser. Free on the junior tier, no card, no setup.
+> [Fix a Kubernetes CrashLoopBackOff on HeyDevJob →](https://heydevjob.com/projects/kubernetes-crashloopbackoff-portfolio-project)
+
+**Explore Kubernetes** · [📍 Roadmap](../../roadmaps/kubernetes.md) · [🛠️ Projects](README.md) · [💬 Interview](../../interview/kubernetes.md) · [✅ Checklist](../../checklists/kubernetes.md)
+
+[Next: Fix a Kubernetes ImagePullBackOff ▶](fix-a-kubernetes-imagepullbackoff.md)

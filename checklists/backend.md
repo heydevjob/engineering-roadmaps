@@ -1,10 +1,12 @@
+[Home](../README.md) › **Backend Checklist**
+
 # Backend Engineer Job-Readiness Checklist
+
+`Checklist` · `10 stages` · `Tick what you can prove`
 
 This is the concrete skill list that gets you hired as a backend engineer, ordered by the [Backend Engineer Roadmap](../roadmaps/backend.md) from junior to senior. These are not topics to read about - they are things you can do in production. Tick what you've actually built or fixed; for anything you can't, there's a live HeyDevJob ticket that makes you prove it.
 
----
-
-## Stage 1 - HTTP & API Fundamentals
+## 🌐 Stage 1 - HTTP & API Fundamentals
 
 - [ ] Return the correct 2xx/4xx/5xx status code for create, update, delete, and error cases
 - [ ] Use `201 Created` with a `Location` header for resource creation
@@ -14,7 +16,7 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Implement cursor (keyset) pagination backed by an index
 - [ ] Version an API and evolve it without breaking existing clients
 
-## Stage 2 - Databases & SQL
+## 🗄️ Stage 2 - Databases & SQL
 
 - [ ] Write joins, aggregates, and subqueries without reaching for an ORM
 - [ ] Read an `EXPLAIN ANALYZE` plan and spot a sequential scan
@@ -25,7 +27,7 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Explain the SQL isolation levels and the anomaly each one prevents
 - [ ] Design a normalized schema with the right foreign keys and constraints
 
-## Stage 3 - Authentication & Authorization
+## 🔐 Stage 3 - Authentication & Authorization
 
 - [ ] Implement password hashing with bcrypt/argon2 (never plaintext, never plain SHA)
 - [ ] Issue a signed JWT on login with an expiry
@@ -36,7 +38,7 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Enforce authorization (not just authentication) so users can't access others' data
 - [ ] Implement a refresh-token flow with short-lived access tokens
 
-## Stage 4 - Validation & Error Handling
+## 🛡️ Stage 4 - Validation & Error Handling
 
 - [ ] Validate and coerce all request input at the boundary
 - [ ] Return clear `400` errors naming the field that failed
@@ -45,7 +47,7 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Allowlist dynamic identifiers (sort columns, table names) that can't be parameterized
 - [ ] Handle and log unexpected errors without leaking stack traces to clients
 
-## Stage 5 - Caching & Performance
+## ⚡ Stage 5 - Caching & Performance
 
 - [ ] Implement the cache-aside pattern with TTLs
 - [ ] Invalidate or update the cache correctly on writes (no stale reads)
@@ -54,7 +56,7 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Rate limit per-user / per-API-key and return `429` with `Retry-After`
 - [ ] Measure latency before and after an optimization instead of guessing
 
-## Stage 6 - Concurrency & Reliability
+## 🔁 Stage 6 - Concurrency & Reliability
 
 - [ ] Identify a check-then-act race condition under concurrent requests
 - [ ] Fix it with a row lock, atomic conditional update, or unique constraint
@@ -63,14 +65,14 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Make every state-changing write safe to retry
 - [ ] Apply timeouts and retries with backoff to outbound calls
 
-## Stage 7 - Async & Messaging
+## 📨 Stage 7 - Async & Messaging
 
 - [ ] Move slow work (email, reports, uploads) off the request thread to a queue
 - [ ] Build a worker that consumes jobs with retries and backoff
 - [ ] Configure a dead-letter queue for poison messages
 - [ ] Reason about at-least-once delivery and make consumers idempotent
 
-## Stage 8 - Observability
+## 📊 Stage 8 - Observability
 
 - [ ] Emit structured (JSON) logs with a correlation/request ID
 - [ ] Propagate a request ID across services to trace one request end-to-end
@@ -78,14 +80,14 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Add distributed tracing across service boundaries
 - [ ] Define an alert that fires on a real symptom, not noise
 
-## Stage 9 - Testing
+## 🧪 Stage 9 - Testing
 
 - [ ] Write unit tests for business logic with test doubles
 - [ ] Write integration tests against a real database
 - [ ] Know what's worth testing and what isn't (the senior judgment call)
 - [ ] Test the failure paths, not just the happy path
 
-## Stage 10 - Senior: System Design & Scale
+## 🏛️ Stage 10 - Senior: System Design & Scale
 
 - [ ] Rename or change a live schema with zero downtime (expand/contract, batched backfill)
 - [ ] Dual-write and migrate reads safely across an app rollout
@@ -95,8 +97,12 @@ This is the concrete skill list that gets you hired as a backend engineer, order
 - [ ] Route reads to replicas and handle replication lag / read-after-write
 - [ ] Explain horizontal scaling, partitioning, and where consistency breaks down
 
-## Can't tick it? Prove it.
+> [!IMPORTANT]
+> **Can't tick it? Prove it.**
+> Every unchecked box above is a skill you can go earn right now. The projects on the [Backend Engineer Roadmap](../roadmaps/backend.md) are live tickets on [HeyDevJob](https://heydevjob.com/backend) - real broken and unbuilt systems in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup, and every fix you ship lands on a portfolio hiring managers can click.
+>
+> **Start your portfolio →** [heydevjob.com/backend](https://heydevjob.com/backend)
 
-Every unchecked box above is a skill you can go earn right now. The projects on the [Backend Engineer Roadmap](../roadmaps/backend.md) are live tickets on [HeyDevJob](https://heydevjob.com/backend) - real broken and unbuilt systems in a cloud workspace you fix from your browser. Free on the junior tier, no card, no setup, and every fix you ship lands on a portfolio hiring managers can click.
+---
 
-**Start your portfolio →** [heydevjob.com/backend](https://heydevjob.com/backend)
+**Explore Backend** · [📍 Roadmap](../roadmaps/backend.md) · [🛠️ Projects](../projects/backend/README.md) · [💬 Interview](../interview/backend.md) · [✅ Checklist](backend.md)
