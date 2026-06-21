@@ -1,19 +1,44 @@
+[Home](../README.md) › **DevOps Roadmap**
+
 # DevOps Engineer Roadmap
+
+`Roadmap` · `10 stages` · `Junior → Senior`
 
 The path from "I can write a script" to "I keep production running" - the skills, in order, that get you hired as a DevOps engineer and paid to keep systems alive.
 
 This roadmap is opinionated. It skips the trivia and the 40-tool logo walls you've seen elsewhere. It covers the 20% of skills that show up in real DevOps work and real interviews, in the order that actually builds on itself. Every node tells you **what** to learn, **why it matters**, and **how you'd prove it**. The linked project is where you prove it on a real broken system.
 
-**How to read a node:**
-- *What* - the skill in one line
-- *Why it matters* - what breaks in production when you don't have it
-- *Prove it* - the project that turns the skill into a portfolio piece
+> [!NOTE]
+> **How to read a node**
+> - *What* - the skill in one line
+> - *Why it matters* - what breaks in production when you don't have it
+> - *Prove it* - the project that turns the skill into a portfolio piece
+>
+> Work top to bottom. Foundations are not optional - senior engineers are fast at the basics, not ignorant of them.
 
-Work top to bottom. Foundations are not optional - senior engineers are fast at the basics, not ignorant of them.
+```mermaid
+flowchart TD
+    S1["Stage 1 · Linux &amp; the CLI"] --> S2["Stage 2 · Networking &amp; DNS"]
+    S2 --> S3["Stage 3 · Web Servers &amp; Load Balancing"]
+    S3 --> S4["Stage 4 · Databases in Production"]
+    S4 --> S5["Stage 5 · Containers"]
+    S5 --> S6["Stage 6 · Kubernetes"]
+    S6 --> S7["Stage 7 · Infrastructure as Code"]
+    S7 --> S8["Stage 8 · CI/CD"]
+    S8 --> S9["Stage 9 · Observability &amp; Incident Response"]
+    S9 --> S10["Stage 10 · Senior: Reliability, Scaling &amp; Security"]
+
+    classDef foundation fill:#dcfce7,stroke:#16a34a,color:#14532d;
+    classDef core fill:#fef9c3,stroke:#ca8a04,color:#713f12;
+    classDef senior fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
+    class S1,S2,S3 foundation;
+    class S4,S5,S6,S7,S8,S9 core;
+    class S10 senior;
+```
 
 ---
 
-## Stage 1 - Linux & the Command Line (Foundations)
+## 🐧 Stage 1 - Linux & the Command Line (Foundations)
 
 Everything you'll ever debug runs on Linux. If you're slow here, you're slow everywhere.
 
@@ -31,7 +56,7 @@ Everything you'll ever debug runs on Linux. If you're slow here, you're slow eve
 - *What:* `grep`, `awk`, `sed`, `journalctl`, `jq` - reading and slicing logs fast.
 - *Why it matters:* Incident response is log reading under pressure. The person who finds the error line first leads the call.
 
-## Stage 2 - Networking & DNS
+## 🌐 Stage 2 - Networking & DNS
 
 Most "it works on my machine" problems are network problems wearing a costume.
 
@@ -44,7 +69,7 @@ Most "it works on my machine" problems are network problems wearing a costume.
 - *What:* Resolution order, records (A/CNAME/SRV), TTLs, `/etc/resolv.conf`, in-cluster DNS.
 - *Why it matters:* It's always DNS. Stale records, wrong search domains, and bad TTLs cause outages that look like everything else.
 
-## Stage 3 - Web Servers & Load Balancing
+## 🚪 Stage 3 - Web Servers & Load Balancing
 
 The front door. Where traffic, TLS, and routing live.
 
@@ -57,7 +82,7 @@ The front door. Where traffic, TLS, and routing live.
 - *What:* How HTTPS works, cert chains, expiry, SNI, renewals.
 - *Why it matters:* Expired certs are an outage class of their own - fully avoidable, deeply embarrassing, and on the front page when they happen.
 
-## Stage 4 - Databases in Production
+## 🗄️ Stage 4 - Databases in Production
 
 You won't write the queries, but you'll keep the database alive - and you'll be blamed when it's slow.
 
@@ -70,7 +95,7 @@ You won't write the queries, but you'll keep the database alive - and you'll be 
 - *What:* What a cache is for, eviction, persistence, when it's the bottleneck.
 - *Why it matters:* A misconfigured cache turns into a thundering herd against your database the moment it restarts.
 
-## Stage 5 - Containers
+## 📦 Stage 5 - Containers
 
 Packaging the app so it runs the same everywhere - and shrinking your 2GB image.
 
@@ -83,7 +108,7 @@ Packaging the app so it runs the same everywhere - and shrinking your 2GB image.
 - *What:* How containers talk, port mapping, persistent data, env config.
 - *Why it matters:* "It runs locally but not in the container" is almost always networking or a missing volume.
 
-## Stage 6 - Kubernetes
+## ☸️ Stage 6 - Kubernetes
 
 The default way to run containers at scale. Where most DevOps salaries live now.
 
@@ -96,9 +121,10 @@ The default way to run containers at scale. Where most DevOps salaries live now.
 - *What:* ConfigMaps, Secrets, requests/limits, probes.
 - *Why it matters:* A missing readiness probe ships broken pods into rotation. A bad memory limit gets your pod OOM-killed at 3am.
 
+> [!TIP]
 > Going deep on Kubernetes? See the dedicated [Kubernetes roadmap](kubernetes.md).
 
-## Stage 7 - Infrastructure as Code
+## 🏗️ Stage 7 - Infrastructure as Code
 
 Click-ops doesn't scale and can't be reviewed. Real infra is code.
 
@@ -107,7 +133,7 @@ Click-ops doesn't scale and can't be reviewed. Real infra is code.
 - *Why it matters:* State drift and a bad `apply` can delete production. Reading a plan correctly is a load-bearing skill.
 - *Prove it:* [Reconcile Terraform State Drift](../projects/devops/reconcile-terraform-state-drift.md)
 
-## Stage 8 - CI/CD
+## 🔁 Stage 8 - CI/CD
 
 How code gets from a laptop to production safely, many times a day.
 
@@ -116,7 +142,7 @@ How code gets from a laptop to production safely, many times a day.
 - *Why it matters:* A pipeline with no rollback is a loaded gun. The deploy strategy decides whether a bad release is a blip or an outage.
 - *Prove it:* [Automate a Node.js Deploy Pipeline With Rollback](../projects/devops/automate-a-nodejs-deploy-with-rollback.md)
 
-## Stage 9 - Observability & Incident Response
+## 📊 Stage 9 - Observability & Incident Response
 
 You can't fix what you can't see. Senior DevOps is measured here.
 
@@ -129,7 +155,7 @@ You can't fix what you can't see. Senior DevOps is measured here.
 - *Why it matters:* How you behave in the first 10 minutes of an outage is most of what separates mid from senior.
 - *Prove it:* [Triage a SEV1 Production Incident](../projects/devops/triage-a-sev1-production-incident.md)
 
-## Stage 10 - Senior: Reliability, Scaling & Security (System Design)
+## 🛡️ Stage 10 - Senior: Reliability, Scaling & Security (System Design)
 
 Where you stop fixing single boxes and start designing systems that don't fall over.
 
@@ -144,17 +170,21 @@ Where you stop fixing single boxes and start designing systems that don't fall o
 
 ---
 
-## Where you are on the path
+## 🧭 Where you are on the path
 
 | Stage | You can... | Hiring level |
 |-------|-----------|--------------|
-| 1-3 | Keep a single box and its services healthy | Junior |
-| 4-6 | Run containerized apps and databases in production | Junior → Mid |
-| 7-9 | Automate infra, ship safely, respond to incidents | Mid |
-| 10 | Design systems that scale and survive failure | Senior |
+| 1-3 | Keep a single box and its services healthy | 🟢 Junior |
+| 4-6 | Run containerized apps and databases in production | 🟢 Junior → 🟡 Mid |
+| 7-9 | Automate infra, ship safely, respond to incidents | 🟡 Mid |
+| 10 | Design systems that scale and survive failure | 🔴 Senior |
 
-## Build it for real
+> [!IMPORTANT]
+> **Build it for real**
+> Every project linked above is a live ticket on [HeyDevJob](https://heydevjob.com/devops) - a real broken system in a cloud workspace, fixed from your browser. The junior tier is free, no card, no setup. Each fix you ship lands on a portfolio you can show.
+>
+> **Start your portfolio →** [heydevjob.com/devops](https://heydevjob.com/devops)
 
-Every project linked above is a live ticket on [HeyDevJob](https://heydevjob.com/devops) - a real broken system in a cloud workspace, fixed from your browser. The junior tier is free, no card, no setup. Each fix you ship lands on a portfolio you can show.
+---
 
-**Start your portfolio →** [heydevjob.com/devops](https://heydevjob.com/devops)
+**Explore DevOps** · [📍 Roadmap](devops.md) · [🛠️ Projects](../projects/devops/README.md) · [💬 Interview](../interview/devops.md) · [✅ Checklist](../checklists/devops.md)
